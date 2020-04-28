@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
-
+import { Movie } from './movie.model';
+import { MovieservicesService } from './moviesservices.service';
 
 @Component({
   selector: 'app-home',
@@ -8,8 +9,22 @@ import { HttpClientModule, HttpClient } from '@angular/common/http';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage {
+  
+  mov:Movie;
+  Url='http://www.omdbapi.com/?apikey=4d9d0ef7&t=';
+  constructor(private movie:MovieservicesService) {
+   
+  }
+  
+  movieTitle='';
 
- 
-constructor(public http:HttpClient) { }
+  ngOnInit(){
+    
+    this.searchMovie();
+  }
+
+  searchMovie(){
+    const search=encodeURIComponent(this.movieTitle).trim();
+    this.mov=this.movie.getMovie(this.Url+search);
+  }
 }
-
